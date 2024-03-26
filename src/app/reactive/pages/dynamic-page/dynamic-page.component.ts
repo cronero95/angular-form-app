@@ -82,7 +82,7 @@ export class DynamicPageComponent {
 
     console.log(this.myForm.value);
 
-    ((this.myForm.controls['favoriteGames']) as FormArray) = this.formBuilder.array([]);
+    this.favoriteGames.clear();
 
     this.myForm.reset();
   }
