@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: './dynamic-page.component.html',
@@ -14,6 +14,9 @@ export class DynamicPageComponent {
       ['Project Zomboid', [Validators.required]]
     ])
   });
+
+  public addFavoriteForm: FormControl =
+    new FormControl('', [Validators.required, Validators.minLength(2)]);
 
   constructor(
     private formBuilder: FormBuilder
@@ -55,6 +58,22 @@ export class DynamicPageComponent {
     return '';
   }
 
+  onAddToFavorites(): void {
+    if(this.addFavoriteForm.invalid) return;
+
+    const newGame = this.addFavoriteForm.value;
+
+    this.favoriteGames.push(
+      this.formBuilder.control(newGame, Validators.required)
+    );
+
+    this.addFavoriteForm.reset();
+  }
+
+  onDeleteFavorite(index: number): void {
+    this.favoriteGames.removeAt(index);
+  }
+
   onSubmit(): void {
     if(this.myForm.invalid) {
       this.myForm.markAllAsTouched();
@@ -62,6 +81,8 @@ export class DynamicPageComponent {
     };
 
     console.log(this.myForm.value);
+
+    ((this.myForm.controls['favoriteGames']) as FormArray) = this.formBuilder.array([]);
 
     this.myForm.reset();
   }

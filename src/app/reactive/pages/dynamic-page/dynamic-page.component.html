@@ -23,11 +23,13 @@
 
             <div class="input-group">
                 <input class="form-control"
-                       placeholder="Agregar favorito">
+                       placeholder="Agregar favorito"
+                       [formControl]="addFavoriteForm">
 
 
                 <button class="btn btn-outline-primary"
-                        type="button">
+                        type="button"
+                        (click)="onAddToFavorites()">
                     Agregar favorito
                 </button>
             </div>
@@ -47,7 +49,8 @@
                            [formControlName]="i">
 
                     <button class="btn btn-outline-danger"
-                            type="button">
+                            type="button"
+                            (click)="onDeleteFavorite(i)">
                       Eliminar
                   </button>
                 </div>
@@ -87,5 +90,5 @@
 <br>
 
 <span>Agregar Juego</span>
-<pre>{{ 'object' | json }}</pre>
+<pre>{{ '' | json }}</pre>
 <pre>{{ 'object' | json }}</pre>
